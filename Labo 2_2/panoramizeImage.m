@@ -14,12 +14,12 @@ function panoramizeImage(Ia, Ib, M, num_samples)
     best_p = 0;
     error_threshold=5;
     for num_iteration=1:M
-        subset = vl_colsubset(1:numMatches, num_samples);
+        subset = vl_colsubset(1:numMatches, min(num_samples,numMatches));
 
         d = xb(1:2,subset) - xa(1:2,subset);
         p = mean(d,2);
         xb_ = zeros(size(xb));
-        for i=1:numMatches,
+        for i=1:numMatches
             xb_(:,i) = xa(:,i) + p;
         end
 
