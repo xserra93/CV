@@ -1,0 +1,1 @@
+The Labo 2.1 was done at the university, but when trying to execute it at home we weren't able to do so. However, the conclusions had already been reached, so we only had to write them. The matlab code should work
