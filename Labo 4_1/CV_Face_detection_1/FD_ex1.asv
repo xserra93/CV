@@ -1,6 +1,6 @@
 % Computational Vision
 % 2015-2016
-% Student name: ...
+% Students names: Hugo Bertiche & Xavier Serra
 %
 % >> OBJECTIVE: 
 % 1) Analize the code
@@ -13,6 +13,9 @@
 function FD_ex1()
 
 clc; close all; clear;
+tmp = matlab.desktop.editor.getActive;
+cd(fileparts(tmp.Filename));
+
 
 %% Initialization
 % Define Viola & Jones parameters for the first two feature masks
@@ -199,14 +202,14 @@ for i = 1:size(XY_TEST,1)
     
     % compute area of regions A and B for the first feature
     % HERE WE USE INTEGRAL IMAGE!
-    area_A = S(y+d1+h1,x+d2+w1) - S(y+d1+1,x+d2+w1) - (S(y+d1+h1,x+d2+1) - S(y+d1+1,x+d2+1));
-    area_B = S(y+2*h1+d1,x+w1+d2) - S(y+d1+h1+1,x+d2+w1) - (S(y+d1+2*h1,x+d2+1)-S(y+d1+h1+1,x+d2+1));
+    area_A = S2(y+d1+h1,x+d2+w1) - S2(y+d1+1,x+d2+w1) - (S2(y+d1+h1,x+d2+1) - S2(y+d1+1,x+d2+1));
+    area_B = S2(y+2*h1+d1,x+w1+d2) - S2(y+d1+h1+1,x+d2+w1) - (S2(y+d1+2*h1,x+d2+1)-S2(y+d1+h1+1,x+d2+1));
     
     % compute area of regions C, D and E for the second feature
     % HERE WE USE INTEGRAL IMAGE!
-    area_C = S(y+d3+h2,x+d4+w2) - S(y+d3+1,x+d4+w2) - (S(y+d3+h2,x+d4+1) - S(y+d3+1,x+d4+1));
-    area_D = S(y+d3+h2,x+d4+w2+w3) - S(y+d3+1,x+d4+w2+w3) - (S(y+d3+h2,x+d4+w2+1) - S(y+d3+1,x+d4+w2+1));
-    area_E = S(y+d3+h2,x+d4+2*w2+w3) - S(y+d3+1,x+d4+2*w2+w3) - (S(y+d3+h2,x+d4+w2+w3+1) - S(y+d3+1,x+d4+w2+w3+1));  
+    area_C = S2(y+d3+h2,x+d4+w2) - S2(y+d3+1,x+d4+w2) - (S2(y+d3+h2,x+d4+1) - S2(y+d3+1,x+d4+1));
+    area_D = S2(y+d3+h2,x+d4+w2+w3) - S2(y+d3+1,x+d4+w2+w3) - (S2(y+d3+h2,x+d4+w2+1) - S2(y+d3+1,x+d4+w2+1));
+    area_E = S2(y+d3+h2,x+d4+2*w2+w3) - S2(y+d3+1,x+d4+2*w2+w3) - (S2(y+d3+h2,x+d4+w2+w3+1) - S2(y+d3+1,x+d4+w2+w3+1));  
     
     % compute features value
     F1 = area_B - area_A;
@@ -222,7 +225,7 @@ end
 features = [FEAT_FACE; FEAT_NON_FACE];
 Group = [repmat(1, length(FEAT_FACE), 1); repmat(2, length(FEAT_NON_FACE), 1)];
 % Call the function knnclassify
-knnclassify(FEAT_TEST,features,Group);
+knn_classification = knnclassify(FEAT_TEST,features,Group);
 
 
 %% Visualize samples in the feature space
@@ -236,13 +239,35 @@ ylabel('Feature 2');
 title('Feature space');
 
 % Second, visualize the test samples in two different colors
-% >> code here <<
+scatter(FEAT_TEST(knn_classification==1,1),FEAT_TEST(knn_classification==1,2),'b');
+scatter(FEAT_TEST(knn_classification==2,1),FEAT_TEST(knn_classification==2,2),'k');
 
 
 %% Visualize classification results in the test image
 
-% Visualize image 'madrid.jpg' with used regions
-% >> code here <<
+figure();
+imshow(I2);
+
+XY_TEST_FACE = XY_TEST(knn_classification==1,:);
+XY_TEST_NON_FACE = XY_TEST(knn_classification==2,:);
+
+% patches with faces
+for i = 1:size(XY_TEST_FACE,1)
+    PATCH = [XY_TEST_FACE(i,:) L L];
+    Rectangle = [PATCH(1) PATCH(2); PATCH(1)+PATCH(3) PATCH(2); PATCH(1)+PATCH(3) PATCH(2)+PATCH(4); PATCH(1)  PATCH(2)+PATCH(4); PATCH(1) PATCH(2)];
+    hold on;
+    plot (Rectangle(:,1), Rectangle(:,2), 'b');
+    hold off;
+end
+
+% patches without faces
+for i = 1:size(XY_TEST_NON_FACE,1)
+    PATCH = [XY_TEST_NON_FACE(i,:) L L];
+    Rectangle = [PATCH(1) PATCH(2); PATCH(1)+PATCH(3) PATCH(2); PATCH(1)+PATCH(3) PATCH(2)+PATCH(4); PATCH(1)  PATCH(2)+PATCH(4); PATCH(1) PATCH(2)];
+    hold on;
+    plot (Rectangle(:,1), Rectangle(:,2), 'k');
+    hold off;
+end
 
 end
 
