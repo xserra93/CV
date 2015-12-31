@@ -1,0 +1,10 @@
+Practicum 1 - Face detection
+	Exercise 1: Haar-like features and Classification............................	XAVIER
+		Part 1: Compute and visualize Haar-like features
+		Part 2: Classification in the feature space
+	Exercise 2: Haar-like features and Classification............................	A ESCOGER
+	Exercise 3: Apply and evaluate Viola & Jones method on a video...............	HUGO
+
+Practicum 2 - Face Recognition
+	Gender recognition...........................................................	XAVIER
+	Subject recognition..........................................................	HUGO
