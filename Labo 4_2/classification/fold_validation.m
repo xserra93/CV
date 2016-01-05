@@ -34,7 +34,9 @@ for i = 1:NFolds
     % 9. To complete:
     % Answer this question: 
     % c. What is contained in 'n' and in 'index'?
-    % >> answer here <<
+        % ANSWER: In 'n' there are stored the identifiers of the persons
+        % used as test set. These identifiers will be later used to 
+        % extract all of their images to be used in the obtaining of the error
   
     % Load Training Set     
     TrainSet = features(:,find(index ~= 1)');
@@ -71,7 +73,8 @@ for i = 1:NFolds
    
     % Train a k-nn classifier and test the test samples using knnclassify.m
     % 10. To complete:
-    % >> code here <<
+    % >> code here << TODO
+    Result_labels = knnclassify(TestSet',TrainSet',TrainLabels');
         
     % Compute the classification rates
     thrs=0;
@@ -79,7 +82,7 @@ for i = 1:NFolds
     FN(i) = sum(Result_labels(TestLabel==1)==0);
     TP(i) = sum(Result_labels(TestLabel==1)==1); 
     TN(i) = sum(Result_labels(TestLabel==0)==0);
-    error(i)=FP(i)+FN(i)/NTest;
+    error(i)=(FP(i)+FN(i))/NTest;
 
 end
 

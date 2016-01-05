@@ -1,7 +1,7 @@
 % Computational Vision
 % Practicum Face Recognition: Gender recognition
 %
-% Student name: ...
+% Student name: Hugo Bertiche & Xavier Serra
 %
 % >> OBJECTIVE: 
 % 1) Analize the code
@@ -15,6 +15,8 @@
 function main_gender_recognition()
 
 clc; close all; clear;
+tmp = matlab.desktop.editor.getActive;
+cd(fileparts(tmp.Filename));
 
 %% These sub-directories are required
 addpath(genpath('feature_extraction'))
@@ -31,9 +33,11 @@ display(ARFace)
 % Answer these questions: 
 % a. Why the size of the field internal, size(ARFace.internal), is 1188 x
 % 2210?
-% >> answer here <<
+    % ANSWER: Because there are 2210 samples, each of them containing an image.
+    % Each image consists of 36x33 pixels, which corresponds to 1188 pixels.
 % b. Which is the information contained in ARFace.person?
-% >> answer here <<
+    % ANSWER: It contains the identifier of the person corresponding to that sample
+    % Concretely, there are 85 different samples
 
 
 %% Count the number of samples and samples males and females of the data set.
@@ -48,7 +52,6 @@ NumberFemales = NumberSamples - NumberMales;
 % matrix.
 % 3. To complete:
 for i=1:10:NumberSamples
-   
     image = ARFace.internal(:,i);
     image = reshape(image,ARFace.internalSz);
     imwrite(image,['Images/image_' num2str(i) '.jpg']);
@@ -73,13 +76,18 @@ images = images';
 labels = labels';
 subjects = subjects';
 
+%% Decision over plotting
+% Set this variable to true if you want the feature_extraction
+% method (with 'PCA' and 'PCA95' options) to display both the 
+% first 30 eigenfaces and the accumulated variance
+plot_results = true;
 
 %% Feature Extraction using PCA
-mat_features_pca = feature_extraction('PCA', images);
+mat_features_pca = feature_extraction('PCA', images, [], plot_results);
 
 
 %% Feature Extraction using PCA (95% variance explained)
-mat_features_pca95 = feature_extraction('PCA95', images);
+mat_features_pca95 = feature_extraction('PCA95', images, [], plot_results);
 
 
 %% Feature Extraction using LDA
@@ -101,7 +109,13 @@ display(Rates_lda);
 % 11. To complete:
 % Answer this question: 
 % Which is the best result?
-% >> answer here <<
+    % ANSWER: The best result is clearly the one using 'lda'. Therefore,
+    % for this particular case, we would rather use the LDA method
+    % instead of the PCA one. Moreover, retaining 95% of the variance
+    % has backfired regarding using only the best 5 dimensions. A possible
+    % explanation for this is that, generally, simpler methods tend to
+    % obtain better results and, therefore, using only 5 dimensions works
+    % better than using 124.
 
 end
 

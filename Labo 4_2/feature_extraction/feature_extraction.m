@@ -1,4 +1,4 @@
-function mat_features = feature_extraction(mode, images, vector_class)
+function mat_features = feature_extraction(mode, images, vector_class, plot_results)
 % FEATURE_EXTRACTION: Returns the sample feature vectors after applying a
 %method of dimensionality reduction (PCA or LDA). 
 % Inputs:
@@ -17,12 +17,12 @@ mat_images_norm = normc(images);
 if  strcmp('PCA', mode)
     %PCA for reducing to 5 dimensions
     dim=5;
-    mat_features = apply_pca(mat_images_norm, dim);
+    mat_features = apply_pca(mat_images_norm, dim, plot_results);
 elseif strcmp('PCA95', mode)
     %PCA for reducing to the number of dimensions necessary to preserve 95% of
     %the data variance.
     dim=0;
-    mat_features = apply_pca(mat_images_norm, dim);      
+    mat_features = apply_pca(mat_images_norm, dim, plot_results);      
 elseif strcmp('LDA', mode)
     %LDA
     mat_features = lda(mat_images_norm, vector_class);

@@ -141,6 +141,7 @@ function FD_ex1()
     xlabel('Feature 1');
     ylabel('Feature 2');
     title('Feature space');
+    legend('Face', 'Non face')
 
 
     %% Visualize image with used regions
@@ -230,13 +231,14 @@ function FD_ex1()
 
     %% Visualize samples in the feature space
     % First, visualize the training samples:
-    figure();
+    figure('Color','white');
     hold on
     scatter(FEAT_FACE(:,1),FEAT_FACE(:,2),'g');
     scatter(FEAT_NON_FACE(:,1),FEAT_NON_FACE(:,2),'r');
     xlabel('Feature 1');
     ylabel('Feature 2');
     title('Feature space');
+    legend('Face', 'Non face', 'New faces', 'New non-faces')
 
     % Second, visualize the test samples in two different colors
     scatter(FEAT_TEST(knn_classification==1,1),FEAT_TEST(knn_classification==1,2),'b');
