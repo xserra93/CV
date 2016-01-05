@@ -26,7 +26,7 @@ for i = 1:video.NumberOfFrames
     % time
     time = datestr((video.NumberOfFrames - i)/(86400*i/toc),'MM:SS');
     disp(['Progress: ', num2str(100*i/video.NumberOfFrames), '%']);
-    disp(['Remaining time: ', time, 's']);
+    disp(['Remaining time: ', time]);
 end
 end
 
