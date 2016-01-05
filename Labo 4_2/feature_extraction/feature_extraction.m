@@ -16,7 +16,7 @@ mat_images_norm = normc(images);
 %% Dimensionality reduction
 if  strcmp('PCA', mode)
     %PCA for reducing to 5 dimensions
-    dim=2;
+    dim=5;
     mat_features = apply_pca(mat_images_norm, dim, plot_results);
 elseif strcmp('PCA95', mode)
     %PCA for reducing to the number of dimensions necessary to preserve 95% of
