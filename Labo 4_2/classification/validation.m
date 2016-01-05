@@ -1,10 +1,10 @@
-function Rates=validation(features, labels, subjects, F)
+function Rates=validation(features, labels, subjects, F, k)
 % VALIDATION: Validation of the classification method using F fold cross validation
 % Outputs: 
 % Rates, structure storing the validation rates.
 
 % Fold validation strategy
-[error,FP,FN,TP,TN] = fold_validation(features, labels, subjects, F);
+[error,FP,FN,TP,TN] = fold_validation(features, labels, subjects, F, k);
 
 % Compute and store the mean rates of validation in 
 error=mean(error);

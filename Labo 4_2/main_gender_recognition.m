@@ -80,7 +80,7 @@ subjects = subjects';
 % Set this variable to true if you want the feature_extraction
 % method (with 'PCA' and 'PCA95' options) to display both the 
 % first 30 eigenfaces and the accumulated variance
-plot_results = true;
+plot_results = false;
 
 %% Feature Extraction using PCA
 mat_features_pca = feature_extraction('PCA', images, [], plot_results);
@@ -99,11 +99,12 @@ mat_features_lda = feature_extraction('LDA', images, labels);
 % cross validation with: the samples, labels, information
 % about the training set subjects and F the number of folds.
 F = 10;
-Rates_pca = validation(mat_features_pca', labels', subjects', F);
+k = 3;
+Rates_pca = validation(mat_features_pca', labels', subjects', F, k);
 display(Rates_pca);
-Rates_pca95 = validation(mat_features_pca95', labels', subjects', F);
+Rates_pca95 = validation(mat_features_pca95', labels', subjects', F, k);
 display(Rates_pca95);
-Rates_lda = validation(mat_features_lda', labels', subjects', F);
+Rates_lda = validation(mat_features_lda', labels', subjects', F, k);
 display(Rates_lda);
 
 % 11. To complete:

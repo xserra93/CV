@@ -1,4 +1,4 @@
-function [error, FP, FN, TP, TN] = fold_validation(features, labels, subjects, NFolds)
+function [error, FP, FN, TP, TN] = fold_validation(features, labels, subjects, NFolds, k)
 % FOLD VALIDATION: compute the classification rates of validation after
 %classification.
 % Inputs:
@@ -74,7 +74,7 @@ for i = 1:NFolds
     % Train a k-nn classifier and test the test samples using knnclassify.m
     % 10. To complete:
     % >> code here << TODO
-    Result_labels = knnclassify(TestSet',TrainSet',TrainLabels');
+    Result_labels = knnclassify(TestSet',TrainSet',TrainLabels',k);
         
     % Compute the classification rates
     thrs=0;
